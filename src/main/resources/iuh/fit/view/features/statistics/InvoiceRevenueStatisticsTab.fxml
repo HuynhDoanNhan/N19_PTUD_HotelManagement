@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.dlsc.gemsfx.daterange.DateRangePicker?>
+<?import java.lang.String?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.chart.BarChart?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Pagination?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="565.0" prefWidth="1251.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="iuh.fit.controller.features.statistics.InvoiceRevenueStatisticsTabController">
+    <padding>
+        <Insets top="10.0" />
+    </padding>
+    <VBox prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <HBox prefHeight="28.0" prefWidth="818.0" spacing="25.0">
+            <VBox.margin>
+                <Insets top="10.0" />
+            </VBox.margin>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Chọn thời gian cụ thể">
+                <font>
+                    <Font size="20.0" />
+                </font>
+            </Text>
+            <DateRangePicker fx:id="invoiceTabDateRangePicker" prefHeight="32.0" prefWidth="390.0" />
+            <ComboBox fx:id="employeeNameCombobox" onAction="#statisticByEmployeeName" prefHeight="30.0" prefWidth="244.0" promptText="Chọn nhân viên">
+                <HBox.margin>
+                    <Insets left="80.0" />
+                </HBox.margin>
+            </ComboBox>
+            <Button mnemonicParsing="false" onAction="#refreshData" prefHeight="30.0" prefWidth="75.0" stylesheets="@../../../styles/Button.css" text="Tải lại" textAlignment="CENTER">
+            <styleClass>
+               <String fx:value="refesh" />
+               <String fx:value="button-refresh" />
+            </styleClass></Button>
+            <Button mnemonicParsing="false" onAction="#exportExcelFile" prefHeight="30.0" prefWidth="79.0" styleClass="button-excel" stylesheets="@../../../styles/Button.css" text="Xuất Excel">
+            <font>
+               <Font name="Segoe UI" size="12.0" />
+            </font></Button>
+         <Button mnemonicParsing="false" onAction="#showFileAddress" prefHeight="30.0" text="..." />
+        </HBox>
+        <HBox prefHeight="68.0" prefWidth="1240.0">
+            <VBox.margin>
+                <Insets top="10.0" />
+            </VBox.margin>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Chọn theo năm">
+                <font>
+                    <Font size="20.0" />
+                </font>
+            </Text>
+            <CheckBox fx:id="filterByYearCheckBox" mnemonicParsing="false" onAction="#statisticbyYearChecked">
+            <HBox.margin>
+               <Insets left="20.0" top="4.0" />
+            </HBox.margin>
+            </CheckBox>
+            <ComboBox fx:id="yearsCombobox" disable="true" onAction="#statisticByYear" prefHeight="27.0" prefWidth="122.0" promptText="Năm">
+            <HBox.margin>
+               <Insets left="35.0" />
+            </HBox.margin>
+            </ComboBox>
+         <ComboBox fx:id="quarterCombobox" disable="true" onAction="#statisticByQuarter" prefHeight="27.0" prefWidth="122.0" promptText="Quý">
+            <HBox.margin>
+               <Insets left="38.0" />
+            </HBox.margin>
+         </ComboBox>
+         <Button fx:id="statisticAllTheTimeButton" disable="true" mnemonicParsing="false" onAction="#statisticAllTheTime" prefHeight="26.0" prefWidth="244.0" text="Thống kê toàn bộ">
+            <HBox.margin>
+               <Insets left="210.0" />
+            </HBox.margin>
+         </Button>
+         <CheckBox fx:id="filterAllTheTimeCheckbox" mnemonicParsing="false" onAction="#statisticAllTheTimeChecked">
+            <HBox.margin>
+               <Insets left="24.0" top="4.0" />
+            </HBox.margin>
+         </CheckBox>
+        </HBox>
+        <HBox prefHeight="31.0" prefWidth="888.0" spacing="20.0">
+            <VBox.margin>
+                <Insets top="10.0" />
+            </VBox.margin>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Hình thức hiển thị">
+                <font>
+                    <Font size="14.0" />
+                </font>
+            </Text>
+            <RadioButton fx:id="showTableViewRadioButton" mnemonicParsing="false" onAction="#switchBetweenTableViewAndChartView" selected="true" text="Bảng dữ liệu">
+                <HBox.margin>
+                    <Insets left="24.0" />
+                </HBox.margin>
+                <toggleGroup>
+                    <ToggleGroup fx:id="showDataViewToggleGroup" />
+                </toggleGroup>
+            </RadioButton>
+            <RadioButton fx:id="showChartDataRadioButton" mnemonicParsing="false" onAction="#switchBetweenTableViewAndChartView" text="Biểu đồ" toggleGroup="$showDataViewToggleGroup" />
+        </HBox>
+        <StackPane prefHeight="465.0" prefWidth="1240.0">
+            <VBox.margin>
+                <Insets />
+            </VBox.margin>
+            <AnchorPane fx:id="tableViewAnchorPane" prefHeight="200.0" prefWidth="200.0">
+                <VBox layoutY="8.0" prefHeight="422.0" prefWidth="1240.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                    <TableView fx:id="invoiceDataTableView" prefHeight="343.0" prefWidth="1251.0" stylesheets="@../../../styles/TableView.css">
+                        <columns>
+                            <TableColumn fx:id="invoiceIDColumn" prefWidth="111.99999696016312" text="Mã hóa đơn" />
+                            <TableColumn fx:id="customerNameColumn" prefWidth="175.19994354248047" text="Khách hàng" />
+                            <TableColumn fx:id="roomIDColumn" minWidth="0.0" prefWidth="156.0" text="Mã phòng" />
+                            <TableColumn fx:id="employeeNameColumn" prefWidth="137.60003662109375" text="Nhân viên" />
+                            <TableColumn fx:id="invoiceDateColumn" prefWidth="146.4000244140625" text="Ngày lập" />
+                            <TableColumn fx:id="depositColumn" prefWidth="130.4000244140625" text="Tiền cọc" />
+                            <TableColumn fx:id="serviceChargeColumn" prefWidth="98.39996337890625" text="Dịch vụ" />
+                            <TableColumn fx:id="roomChargeColumn" prefWidth="126.39996337890625" text="Tiền phòng" />
+                            <TableColumn fx:id="netDueColumn" prefWidth="150.4000244140625" text="Tổng tiền" />
+                        </columns>
+                        <VBox.margin>
+                            <Insets top="10.0" />
+                        </VBox.margin>
+                    </TableView>
+                </VBox>
+            </AnchorPane>
+            <AnchorPane fx:id="chartViewAnchorPane" prefHeight="200.0" prefWidth="200.0" visible="false">
+                <StackPane.margin>
+                    <Insets top="10.0" />
+                </StackPane.margin>
+                <BarChart fx:id="invoiceDataBarChart" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                    <xAxis>
+                        <CategoryAxis side="BOTTOM" />
+                    </xAxis>
+                    <yAxis>
+                        <NumberAxis side="LEFT" />
+                    </yAxis>
+                </BarChart>
+            </AnchorPane>
+        </StackPane>
+        <HBox prefHeight="100.0" prefWidth="200.0">
+            <VBox.margin>
+                <Insets />
+            </VBox.margin>
+            <AnchorPane prefHeight="61.0" prefWidth="1354.0">
+                <HBox.margin>
+                    <Insets />
+                </HBox.margin>
+            <Text fontSmoothingType="LCD" layoutX="315.0" layoutY="37.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tiền cọc      : " wrappingWidth="122.39999999999986" AnchorPane.bottomAnchor="18.780468749999997" AnchorPane.topAnchor="15.0">
+               <font>
+                  <Font name="Segoe UI" size="20.0" />
+               </font></Text>
+            <Text fx:id="depositText" fontSmoothingType="LCD" layoutX="432.0" layoutY="38.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" AnchorPane.topAnchor="16.41796875">
+               <font>
+                  <Font name="Segoe UI" size="20.0" />
+               </font></Text>
+                <Text fontSmoothingType="LCD" layoutX="14.0" layoutY="34.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tổng số hóa đơn  :" wrappingWidth="175.42266845703136" AnchorPane.bottomAnchor="16.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="1201.0" AnchorPane.topAnchor="15.0">
+               <font>
+                  <Font name="Segoe UI" size="20.0" />
+               </font>
+            </Text>
+                <Text fx:id="numOfInvoiceText" fontSmoothingType="LCD" layoutX="175.0" layoutY="36.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" AnchorPane.bottomAnchor="16.0" AnchorPane.topAnchor="15.0">
+               <font>
+                  <Font name="Segoe UI" size="20.0" />
+               </font>
+            </Text>
+                <Text fontSmoothingType="LCD" layoutX="603.0" layoutY="38.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tổng doanh thu   : " AnchorPane.bottomAnchor="18.780468749999997" AnchorPane.leftAnchor="603.0" AnchorPane.topAnchor="15.0">
+               <font>
+                  <Font name="Segoe UI" size="20.0" />
+               </font>
+            </Text>
+                <Text fx:id="totalMoneyText" fontSmoothingType="LCD" layoutX="772.0" layoutY="35.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" AnchorPane.bottomAnchor="18.780468749999997" AnchorPane.leftAnchor="772.0" AnchorPane.rightAnchor="608.41875" AnchorPane.topAnchor="14.0">
+               <font>
+                  <Font name="Segoe UI" size="20.0" />
+               </font>
+            </Text>
+            <Pagination fx:id="invoicePagination" layoutX="946.0" layoutY="4.0" maxPageIndicatorCount="5" prefHeight="61.0" prefWidth="226.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="946.0" AnchorPane.rightAnchor="220.0" AnchorPane.topAnchor="0.0" />
+            </AnchorPane>
+        </HBox>
+      <HBox prefHeight="38.0" prefWidth="1251.0">
+         <children>
+            <AnchorPane prefHeight="35.0" prefWidth="1262.0">
+               <children>
+                  <Text layoutX="14.0" layoutY="31.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Dịch vụ                  : " wrappingWidth="175.42266845703148" AnchorPane.bottomAnchor="-6.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="12.0">
+                     <font>
+                        <Font name="Segoe UI" size="20.0" />
+                     </font>
+                  </Text>
+                  <Text fx:id="serviceChargeText" layoutX="175.0" layoutY="34.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" AnchorPane.topAnchor="12.41796875">
+                     <font>
+                        <Font name="Segoe UI" size="20.0" />
+                     </font>
+                  </Text>
+                  <Text layoutX="317.0" layoutY="32.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tiền phòng : " AnchorPane.bottomAnchor="16.58046875" AnchorPane.topAnchor="12.0">
+                     <font>
+                        <Font name="Segoe UI" size="20.0" />
+                     </font>
+                  </Text>
+                  <Text fx:id="roomChargeText" layoutX="433.0" layoutY="31.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" AnchorPane.bottomAnchor="16.799999999999997" AnchorPane.topAnchor="12.0">
+                     <font>
+                        <Font name="Segoe UI" size="20.0" />
+                     </font>
+                  </Text>
+               </children>
+            </AnchorPane>
+         </children>
+      </HBox>
+    </VBox>
+</AnchorPane>
