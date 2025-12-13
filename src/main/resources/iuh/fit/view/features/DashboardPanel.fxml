@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.chart.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane
+	    xmlns="http://javafx.com/javafx/22"
+	    xmlns:fx="http://javafx.com/fxml/1"
+	    fx:controller="iuh.fit.controller.features.DashboardController"
+	    styleClass="root"
+	    stylesheets="@/iuh/fit/styles/Dashboard.css"
+	    prefWidth="1200" prefHeight="900">
+
+
+
+    <children>
+        <VBox spacing="15"
+              AnchorPane.topAnchor="0"
+              AnchorPane.leftAnchor="0"
+              AnchorPane.rightAnchor="0"
+              AnchorPane.bottomAnchor="0">
+
+            <padding>
+                <Insets top="20" right="20" bottom="20" left="20"/>
+            </padding>
+
+            <!-- 🔵 TOP TITLE -->
+            <HBox alignment="CENTER_LEFT">
+                <Label text="Dashboard tổng quan" styleClass="dashboard-main-title-premium"/>
+                <Pane HBox.hgrow="ALWAYS"/>
+                <Label fx:id="currentDateLabel" styleClass="date-label"/>
+            </HBox>
+
+            <!-- 🟩 KPI DASHBOARD -->
+            <HBox spacing="20" alignment="CENTER">
+			    <padding>
+			        <Insets top="2" right="10" bottom="5" left="10"/>
+			    </padding>
+
+                <VBox styleClass="kpi-card" alignment="CENTER" spacing="5" HBox.hgrow="ALWAYS">
+                    <Label text="Tổng phòng" styleClass="kpi-title"/>
+                    <Label fx:id="totalRoomLabel" styleClass="kpi-value"/>
+                </VBox>
+
+                <VBox styleClass="kpi-card-orange" alignment="CENTER" spacing="5" HBox.hgrow="ALWAYS">
+                    <Label text="Đang sử dụng" styleClass="kpi-title"/>
+                    <Label fx:id="usingRoomLabel" styleClass="kpi-value"/>
+                </VBox>
+
+                <VBox styleClass="kpi-card-green" alignment="CENTER" spacing="5" HBox.hgrow="ALWAYS">
+                    <Label text="Còn trống" styleClass="kpi-title"/>
+                    <Label fx:id="availableRoomLabel" styleClass="kpi-value"/>
+                </VBox>
+
+                <VBox styleClass="kpi-card-purple" alignment="CENTER" spacing="5" HBox.hgrow="ALWAYS">
+                    <Label text="Tỷ lệ lấp đầy" styleClass="kpi-title"/>
+                    <Label fx:id="occupancyRateLabel" styleClass="kpi-value"/>
+                </VBox>
+            </HBox>
+
+            <!-- 🟦 CHARTS SECTION -->
+			<HBox spacing="20" VBox.vgrow="NEVER">
+			
+			    <!-- Line chart doanh thu -->
+			    <VBox spacing="10" styleClass="chart-card" HBox.hgrow="ALWAYS">
+			        <Label text="Biểu đồ doanh thu" styleClass="chart-title"/>
+			        <LineChart fx:id="revenueChart" animated="true" prefHeight="230">
+			            <xAxis><CategoryAxis label="Ngày"/></xAxis>
+			            <yAxis><NumberAxis label="Doanh thu"/></yAxis>
+			        </LineChart>
+			    </VBox>
+			
+			    <!-- Bar chart loại phòng -->
+			    <VBox spacing="10" styleClass="chart-card" HBox.hgrow="ALWAYS">
+			        <Label text="Lượt đặt theo loại phòng" styleClass="chart-title"/>
+			        <BarChart fx:id="roomTypeBarChart" animated="true" prefHeight="230">
+			            <xAxis>
+			                <CategoryAxis fx:id="roomTypeBarXAxis" label="Loại phòng"/>
+			            </xAxis>
+			            <yAxis>
+			                <NumberAxis fx:id="roomTypeBarYAxis" label="Số lượt đặt"/>
+			            </yAxis>
+			        </BarChart>
+			    </VBox>
+			
+			</HBox>
+
+
+            <!-- 🟧 ACTIVITY SECTION -->
+            <HBox spacing="20" VBox.vgrow="ALWAYS">
+
+                <VBox spacing="10" styleClass="activity-card" HBox.hgrow="ALWAYS">
+                    <Label text="Khách check-in hôm nay" styleClass="activity-title"/>
+                    <TableView fx:id="checkinTable" prefHeight="220">
+                        <placeholder><Label text="Không có khách check-in hôm nay"/></placeholder>
+                        <columns>
+                            <TableColumn fx:id="colCheckinCustomer" text="Khách" prefWidth="180"/>
+                            <TableColumn fx:id="colCheckinRoom" text="Phòng" prefWidth="120"/>
+                            <TableColumn fx:id="colCheckinTime" text="Giờ" prefWidth="120"/>
+                        </columns>
+                    </TableView>
+                </VBox>
+
+                <VBox spacing="10" styleClass="activity-card" HBox.hgrow="ALWAYS">
+                    <Label text="Khách check-out hôm nay" styleClass="activity-title"/>
+                    <TableView fx:id="checkoutTable" prefHeight="220">
+                        <placeholder><Label text="Không có khách check-out hôm nay"/></placeholder>
+                        <columns>
+                            <TableColumn fx:id="colCheckoutCustomer" text="Khách" prefWidth="180"/>
+                            <TableColumn fx:id="colCheckoutRoom" text="Phòng" prefWidth="120"/>
+                            <TableColumn fx:id="colCheckoutTime" text="Giờ" prefWidth="120"/>
+                        </columns>
+                    </TableView>
+                </VBox>
+
+            </HBox>
+
+        </VBox>
+    </children>
+
+</AnchorPane>
